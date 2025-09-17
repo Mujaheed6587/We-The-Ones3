@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>We The Ones</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      background: #fffbe7;
+      border-radius: 15px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+      padding: 32px 24px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.3rem;
+      font-weight: bold;
+      margin-bottom: 28px;
+      color: #ff6a00;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 8px #fffbe7;
+    }
+    label {
+      font-weight: 500;
+      color: #333;
+      display: block;
+      margin-bottom: 8px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 18px;
+      border: 1px solid #ff6a00;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    button {
+      display: block;
+      width: 100%;
+      background: #ff6a00;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #ff9400;
+    }
+    .student-details {
+      margin-top: 24px;
+      padding: 18px;
+      border-radius: 12px;
+      background: #e7f9fc;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      font-size: 1.08rem;
+      color: #07689f;
+      animation: fadeIn 0.5s;
+    }
+    .not-found {
+      color: #d7263d;
+      text-align: center;
+      margin-top: 18px;
+      font-weight: bold;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>We The Ones</h1>
+    <label for="regNumber">Enter Registration Number:</label>
+    <input type="text" id="regNumber" placeholder="e.g. REG2025001">
+    <button onclick="findStudent()">Show Student Details</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    // Demo data: 15 students
+    const students = [
+  {reg: 'UG22/SCCS/1011', name: 'mujaheed', course: 'Computer Science', department: 'Computer Science', faculty: 'Science', university: 'GSU'},
+  {reg: 'UG22/SCCS/1038', name: 'usman nanu', course: 'Computer Science', department: 'Computer Science', faculty: 'Tech', university: 'GSU'},
+  {reg: 'UG22/SCCS/1043', name: 'bilal garko', course: 'Computer Science', department: 'Computer Science', faculty: 'Science', university: 'GSU'},
+  {reg: 'UG22/SCCS/1085', name: 'usman adamu', course: 'Computer Science', department: 'Computer Science', faculty: 'Science', university: 'GSU'},
+  {reg: 'UG22/SCCS/1083', name: 'baki', course: 'Computer Science', department: 'Computer Science', faculty: 'Health', university: 'GSU'},
+  {reg: 'UG22/SCCS/1108', name: 'Faizu babayo', course: 'Computer Science', department: 'Computer Science', faculty: 'Science', university: 'GSU'},
+  {reg: 'UG22/SCCS/1100', name: 'aiman nurrundeen', course: 'Economics', department: 'Computer Science', faculty: 'Arts', university: 'GSU'},
+  {reg: 'UG22/SCCS/1062', name: 'hashim sharba', course: 'Computer Science', department: 'Computer Science', faculty: 'Science', university: 'GSU'},
+  {reg: 'UG22/SCCS/1029', name: 'hauwa plasher', course: 'Computer Science', department: 'Computer Science', faculty: 'Arts', university: 'GSU'},
+  {reg: 'UG22/SCCS/1095', name: 'salma gazzy', course: 'Computer Science', department: 'Computer Science', faculty: 'Science', university: 'GSU'},
+  {reg: 'REG2025011', name: 'Joy Ijeoma', course: 'Nursing', department: 'Nursing', faculty: 'Health', university: 'OAU Ile-Ife'},
+  {reg: 'REG2025012', name: 'Abubakar Lawal', course: 'Architecture', department: 'Design', faculty: 'Environmental', university: 'Covenant University'},
+  {reg: 'REG2025013', name: 'Maryam Ali', course: 'Statistics', department: 'Mathematics', faculty: 'Science', university: 'UNIJOS'},
+  {reg: 'REG2025014', name: 'David Olamide', course: 'Political Science', department: 'Politics', faculty: 'Social Sciences', university: 'UNILORIN'},
+  {reg: 'REG2025015', name: 'Esther Obi', course: 'Business Admin', department: 'Management', faculty: 'Business', university: 'UNIPORT'}
+];
+</script>
+
+    function findStudent() {
+      const regNumber = document.getElementById('regNumber').value.trim().toUpperCase();
+      const student = students.find(s => s.reg === regNumber);
+      const result = document.getElementById('result');
+      if (student) {
+        result.innerHTML = `
+          <div class="student-details">
+            <strong>Name:</strong> ${student.name}<br>
+            <strong>Course:</strong> ${student.course}<br>
+            <strong>Department:</strong> ${student.department}<br>
+            <strong>Faculty:</strong> ${student.faculty}<br>
+            <strong>University:</strong> ${student.university}
+          </div>
+        `;
+      } else {
+        result.innerHTML = `<div class="not-found">Student not found! Please check the registration number.</div>`;
+      }
+    }
+
+    // Optional: Enter key submits
+    document.getElementById('regNumber').addEventListener('keyup', function(e) {
+      if(e.key === 'Enter') findStudent();
+    });
+  </script>
+</body>
+</html>
